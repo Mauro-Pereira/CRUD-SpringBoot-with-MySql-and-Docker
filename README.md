@@ -4,5 +4,5 @@ In this project I am using Spring Boot (with Java) and MySQL to make CRUD (CREAT
 
 ![](/screenshot/insominia_screenshot.png)
 
-![](/screenshot/spring-boot.png)
+![](/screenshot/code_screenshot.png)
 
