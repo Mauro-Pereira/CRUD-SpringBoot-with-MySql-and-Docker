@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.crud.model.Contact;
 import com.example.crud.repository.ContactRepository;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -25,17 +27,19 @@ public class ContactController {
         this.repository = repository;
     }
 
+    @GetMapping
     public List<Contact> findAll(){
         return this.repository.findAll();
     }
 
-    @GetMapping(path = {"/id"})
+    @GetMapping(path = {"/{id}"})
     public ResponseEntity<Contact> findById(@PathVariable Long id){
         return this.repository.findById(id).map(record -> ResponseEntity.ok().body(record))
         .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Contact save(@RequestBody Contact contact){
         return this.repository.save(contact);
     }
