@@ -1,11 +1,12 @@
 package com.example.crud.service;
 
+import com.example.crud.exceptions.ResourceAlreadyExistsException;
+import com.example.crud.exceptions.ResourceNotFoundException;
 import com.example.crud.model.Contact;
 import com.example.crud.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,11 @@ import java.util.Optional;
 public class ContactService {
 
     @Autowired
-    private ContactRepository contactRepository;
+    private final ContactRepository contactRepository;
+
+    public ContactService(ContactRepository contactRepository) {
+        this.contactRepository = contactRepository;
+    }
 
     public List<Contact> listAllContact(){
         return this.contactRepository.findAll();
@@ -23,17 +28,17 @@ public class ContactService {
         Optional<Contact> contact = this.contactRepository.findById(id);
 
         if(contact.isEmpty()){
-            System.out.println("Lançar execessão");
+            throw new ResourceNotFoundException("Contact not found");
         }
 
         return contact;
     }
 
     public Contact saveContact(Contact contact){
-        Optional<Contact> fondContact = this.contactRepository.findById(contact.getId());
+        Optional<Contact> fondContact = this.contactRepository.findContactByEmail(contact.getEmail());
 
         if(fondContact.isPresent()){
-            System.out.println("Lançar execessão");
+            throw new ResourceAlreadyExistsException("Contact Already exists");
         }
 
         return this.contactRepository.save(contact);
@@ -44,7 +49,7 @@ public class ContactService {
         Optional<Contact> fondContact = this.contactRepository.findById(id);
 
         if(fondContact.isEmpty()){
-            System.out.println("Lançar execessão");
+            throw new ResourceNotFoundException("Contact not found");
         }
 
         Contact presentContact;
@@ -61,7 +66,7 @@ public class ContactService {
         Optional<Contact> fondContact = this.contactRepository.findById(id);
 
         if(fondContact.isEmpty()){
-            System.out.println("Lançar execessão");
+            throw new ResourceNotFoundException("Contact not found");
         }
 
         this.contactRepository.deleteById(id);
