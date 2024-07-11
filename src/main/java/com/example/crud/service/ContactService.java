@@ -24,14 +24,14 @@ public class ContactService {
         return this.contactRepository.findAll();
     }
 
-    public Optional<Contact> findContactById(Long id){
+    public Contact findContactById(Long id){
         Optional<Contact> contact = this.contactRepository.findById(id);
 
         if(contact.isEmpty()){
             throw new ResourceNotFoundException("Contact not found");
         }
 
-        return contact;
+        return contact.get();
     }
 
     public Contact saveContact(Contact contact){

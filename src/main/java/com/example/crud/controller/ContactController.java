@@ -1,10 +1,14 @@
 package com.example.crud.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.example.crud.dto.ContactDTO;
+import com.example.crud.dto.ContactResponseDTO;
 import com.example.crud.model.Contact;
 import com.example.crud.repository.ContactRepository;
 
+import com.example.crud.service.ContactService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,57 +18,49 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping({"/contact"})
 public class ContactController {
 
-    private ContactRepository repository;
+    private final ContactService contactService;
 
-    ContactController(ContactRepository repository){
-        this.repository = repository;
+    ContactController(ContactRepository repository, ContactService contactService){
+        this.contactService = contactService;
     }
 
     @GetMapping
-    public List<Contact> findAll(){
-        return this.repository.findAll();
+    public ResponseEntity<List<ContactResponseDTO>> findAll(){
+        List<ContactResponseDTO> contactResponseDTOList = this.contactService.listAllContact().stream().map(ContactResponseDTO::transformToDTO).collect(Collectors.toList());
+        return new ResponseEntity<>(contactResponseDTOList, HttpStatus.OK);
+
     }
 
     @GetMapping(path = {"/{id}"})
-    public ResponseEntity<Contact> findById(@PathVariable Long id){
-        return this.repository.findById(id).map(record -> ResponseEntity.ok().body(record))
-        .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ContactResponseDTO> findById(@PathVariable Long id){
+        Contact contact = this.contactService.findContactById(id);
+        return new ResponseEntity<>(ContactResponseDTO.transformToDTO(contact), HttpStatus.OK);
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Contact save(@RequestBody Contact contact){
-        return this.repository.save(contact);
+    public ResponseEntity<Contact>save(@RequestBody ContactDTO contactDTO){
+        Contact contact = this.contactService.saveContact(contactDTO.convertToContactObject());
+        return new ResponseEntity<>(contact, HttpStatus.CREATED);
     }
 
     @PutMapping(value="/{id}")
     public ResponseEntity<Contact> update(@PathVariable("id") long id,
-                                        @RequestBody Contact contact){
-    return repository.findById(id)
-        .map(record -> {
-            record.setName(contact.getName());
-            record.setEmail(contact.getEmail());
-            record.setPhone(contact.getPhone());
-            Contact updated = repository.save(record);
-            return ResponseEntity.ok().body(updated);
-        }).orElse(ResponseEntity.notFound().build());
+                                        @RequestBody ContactDTO contactDTO){
+        Contact contact = this.contactService.updateContact(id, contactDTO.convertToContactObject());
+        return new ResponseEntity<>(contact, HttpStatus.OK);
   }
 
 
     @DeleteMapping(path ={"/{id}"})
     public ResponseEntity<?> delete(@PathVariable("id") long id) {
-        return repository.findById(id)
-        .map(record -> {
-            repository.deleteById(id);
-            return ResponseEntity.ok().build();
-        }).orElse(ResponseEntity.notFound().build());
+        this.contactService.deleteContact(id);
+        return new ResponseEntity<>("Deleted with successfully", HttpStatus.OK);
   }
 
     
