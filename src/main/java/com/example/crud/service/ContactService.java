@@ -28,16 +28,16 @@ public class ContactService {
         Optional<Contact> contact = this.contactRepository.findById(id);
 
         if(contact.isEmpty()){
-            throw new ResourceNotFoundException("Contact not found");
+            throw new ResourceNotFoundException("Contact Not Found");
         }
 
         return contact.get();
     }
 
     public Contact saveContact(Contact contact){
-        Optional<Contact> fondContact = this.contactRepository.findContactByEmail(contact.getEmail());
+        Optional<Contact> foundContact = this.contactRepository.findContactByEmail(contact.getEmail());
 
-        if(fondContact.isPresent()){
+        if(foundContact.isPresent()){
             throw new ResourceAlreadyExistsException("Contact Already exists");
         }
 
@@ -46,15 +46,15 @@ public class ContactService {
 
     public Contact updateContact(long id, Contact contact){
 
-        Optional<Contact> fondContact = this.contactRepository.findById(id);
+        Optional<Contact> foundContact = this.contactRepository.findById(id);
 
-        if(fondContact.isEmpty()){
-            throw new ResourceNotFoundException("Contact not found");
+        if(foundContact.isEmpty()){
+            throw new ResourceNotFoundException("Contact Not Found");
         }
 
         Contact presentContact;
 
-        presentContact = fondContact.get();
+        presentContact = foundContact.get();
 
         presentContact.setName(contact.getName());
         presentContact.setEmail(contact.getEmail());
@@ -63,10 +63,10 @@ public class ContactService {
     }
 
     public void deleteContact(Long id){
-        Optional<Contact> fondContact = this.contactRepository.findById(id);
+        Optional<Contact> foundContact = this.contactRepository.findById(id);
 
-        if(fondContact.isEmpty()){
-            throw new ResourceNotFoundException("Contact not found");
+        if(foundContact.isEmpty()){
+            throw new ResourceNotFoundException("Contact Not Found");
         }
 
         this.contactRepository.deleteById(id);
