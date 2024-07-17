@@ -155,7 +155,6 @@ class ContactServiceTest {
     @Test
     void shouldReturnExceptionContactWhenItNotExists(){
         Long contactId = 1L;
-        Contact contact = new Contact(contactId, "testeName", "teste@email.com", "888888");
         when(this.contactRepository.findById(contactId)).thenReturn(Optional.empty());
         
         ResourceNotFoundException returnedException = assertThrows(
