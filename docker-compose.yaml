@@ -9,7 +9,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: contact
-      MYSQL_USER: root
+      MYSQL_USER: mysql
       MYSQL_PASSWORD: rootpassword
     ports:
       - '3306:3306'
