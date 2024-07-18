@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import com.example.crud.dto.ContactDTO;
 import com.example.crud.dto.ContactResponseDTO;
 import com.example.crud.model.Contact;
-import com.example.crud.repository.ContactRepository;
 
 import com.example.crud.service.ContactService;
 import org.springframework.http.HttpStatus;
@@ -26,13 +25,19 @@ public class ContactController {
 
     private final ContactService contactService;
 
-    ContactController(ContactRepository repository, ContactService contactService){
+    ContactController(ContactService contactService){
         this.contactService = contactService;
     }
 
     @GetMapping
     public ResponseEntity<List<ContactResponseDTO>> findAll(){
-        List<ContactResponseDTO> contactResponseDTOList = this.contactService.listAllContact().stream().map(ContactResponseDTO::transformToDTO).collect(Collectors.toList());
+        List<ContactResponseDTO> contactResponseDTOList = this.contactService
+                                            .listAllContact()
+                                            .stream()
+                                            .map(ContactResponseDTO::transformToDTO)
+                                            .collect(Collectors.toList()
+                                            );
+
         return new ResponseEntity<>(contactResponseDTOList, HttpStatus.OK);
 
     }
