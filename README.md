@@ -7,7 +7,7 @@ Neste projeto, estou utilizando Spring Boot com Java e MySQL para criar um siste
 
 Além disso, para tornar o projeto mais eficiente e prático, utilizei Docker, testes automatizados e integração contínua (CI). O Docker facilita a configuração e execução do ambiente, enquanto os testes automatizados garantem a qualidade do código. A integração contínua, por sua vez, permite que possamos detectar erros rapidamente, mantendo o projeto sempre em bom estado.
 
-![Spring Boot](./screenshot/Spring_Boot.svg)
+![Spring Boot](./screenshot/128px-Spring_Boot.svg.png)
 
 ## MVC (Model-View-Controller)
 O padrão de arquitetura MVC (Model-View-Controller) é amplamente utilizado no desenvolvimento de aplicações web. Ele separa a aplicação em três componentes principais:
