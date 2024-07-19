@@ -40,3 +40,34 @@ Testes automatizados são essenciais para garantir a qualidade e a confiabilidad
 ## Integração Contínua (CI)
 A integração contínua é uma prática de desenvolvimento que permite a detecção rápida de problemas no código. Ela automatiza o processo de construção e teste da aplicação sempre que novas alterações são submetidas, garantindo que o código esteja sempre em um estado funcional. Neste projeto, configurei a CI para executar os testes automatizados e outras verificações, mantendo a qualidade do código e facilitando o desenvolvimento colaborativo.
 
+Para executar este projeto, siga os seguintes passos:
+
+### 1. Clonar o Repositório
+Primeiro, você precisa clonar o repositório do GitHub para a sua máquina local. Execute o seguinte comando no terminal:
+
+```bash
+git clone https://github.com/Mauro-Pereira/-Learning-How-to-make-CRUD-using-Spring-Boot-with-Java-and-MySQL.git
+````
+
+### 2. Abrir o Projeto na IDE
+
+Abra o projeto em uma IDE de sua preferência (por exemplo, IntelliJ IDEA, Eclipse, VSCode).
+
+### 3. Subir o MySQL e o Adminer com Docker
+
+Certifique-se de ter o Docker instalado na sua máquina. No terminal, navegue até o diretório raiz do projeto e execute o comando:
+
+```bash
+docker-compose up
+````
+Este comando irá iniciar os serviços MySQL e Adminer.
+
+### 4. Executar o Projeto
+
+Execute o projeto a partir da sua IDE.
+
+### 5. Acessar o Swagger
+
+Após executar o projeto, você pode acessar a documentação da API pelo Swagger através da seguinte URL:
+
+http://localhost:8080/swagger-ui/index.html
