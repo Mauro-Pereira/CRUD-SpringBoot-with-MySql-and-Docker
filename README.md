@@ -24,7 +24,7 @@ Os DTOs são objetos simples usados para transferir dados entre diferentes camad
 Neste projeto, os DTOs foram utilizados para encapsular os dados trocados entre o frontend e o backend, garantindo uma comunicação eficiente e segura.
 
 ## Exception Handling
-O tratamento de exceções é fundamental para garantir que a aplicação lide com erros de maneira controlada e informativa. Em nosso projeto, utilizamos o `ControllerAdvice` do Spring para gerenciar exceções de forma centralizada, fornecendo respostas apropriadas aos usuários e facilitando a identificação e correção de problemas.
+O tratamento de exceções é fundamental para garantir que a aplicação lide com erros de maneira controlada e informativa. Neste projeto, utilizei o `ControllerAdvice` do Spring para gerenciar exceções de forma centralizada, fornecendo respostas apropriadas aos usuários e facilitando a identificação e correção de problemas.
 
 ## Swagger
 A documentação é uma parte crucial de qualquer projeto, pois facilita a compreensão e o uso da API por outros desenvolvedores. Utilizamos o Swagger neste projeto para documentar todas as rotas e endpoints da aplicação, tornando a API mais acessível e fácil de usar.
